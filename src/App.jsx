@@ -1,4 +1,3 @@
-
 import React, { useRef } from "react";
 import "./App.css";
 import { useGSAP } from "@gsap/react";
@@ -40,21 +39,23 @@ function App() {
   const imageRefs = useRef([]);
 
   useGSAP(() => {
-    gsap.set(imageRefs.current, { opacity: 0, scale: 0.5 });
+    gsap.set(imageRefs.current, { opacity: 0, scale: 0.8 });
 
     ScrollTrigger.create({
       trigger: ".text_image",
       start: "top top",
-      end: "bottom bottom",
-      scrub: 1,
+      end: "bottom center",
+      scrub: 2, // Makes the transition slower and smoother
       pin: ".right",
       markers: true,
       onUpdate: (self) => {
         let index = Math.round(self.progress * (infoImage.length - 1));
+
         gsap.to(imageRefs.current, {
           opacity: (i) => (i === index ? 1 : 0),
-          scale: (i) => (i === index ? 1 : 0.5),
-          duration: 0.5,
+          scale: (i) => (i === index ? 1 : 0.8),
+          duration: 1, // Increased duration for smoother effect
+          ease: "power2.out", // Softer transition
         });
       },
     });
@@ -73,16 +74,16 @@ function App() {
               </div>
             ))}
           </div>
-          <div className="right w-[400px] h-screen flex border border-amber-200 justify-center items-center relative">
+          <div className="right w-[400px] h-screen flex border border-amber-200 justify-center items-center relative overflow-hidden">
             {infoImage.map((item, id) => (
               <img
                 key={id}
                 ref={(el) => (imageRefs.current[id] = el)}
-                className="absolute w-full h-auto object-cover transition-opacity duration-500"
+                className="absolute w-full h-auto object-cover transition-opacity duration-1000 ease-in-out"
                 src={item}
                 alt=""
               />
-            ))} 
+            ))}
           </div>
         </div>
       </div>
