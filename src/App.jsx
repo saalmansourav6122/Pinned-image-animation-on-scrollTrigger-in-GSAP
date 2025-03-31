@@ -44,7 +44,7 @@ function App() {
     ScrollTrigger.create({
       trigger: ".text_image",
       start: "top top",
-      end: "bottom center",
+      end: "bottom bottom",
       scrub: 2, // Makes the transition slower and smoother
       pin: ".right",
       markers: true,
@@ -68,7 +68,7 @@ function App() {
         <div className="text_image flex justify-evenly gap-2.5">
           <div className="left w-[40%]">
             {infoArray.map((item, id) => (
-              <div key={id} className="h-screen flex flex-col justify-center">
+              <div key={id} className=" border border-amber-200 h-screen flex flex-col justify-center">
                 <h3 className="font-bold text-center">{item.title}</h3>
                 <p>{item.description}</p>
               </div>
