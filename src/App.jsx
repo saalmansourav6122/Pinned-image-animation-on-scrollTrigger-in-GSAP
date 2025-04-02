@@ -1,94 +1,86 @@
-import React, { useRef } from "react";
-import "./App.css";
-import { useGSAP } from "@gsap/react";
-import gsap, { ScrollTrigger } from "gsap/all";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function App() {
-  const headLine = "We can do for You";
-  const array = [
-    {
-      info: [
-        {
-          title: "One",
-          description:
-            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet commodi vel velit libero non deserunt veniam dolores quae cupiditate tenetur?",
-        },
-        {
-          title: "Two",
-          description:
-            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet commodi vel velit libero non deserunt veniam dolores quae cupiditate tenetur?",
-        },
-        {
-          title: "Three",
-          description:
-            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet commodi vel velit libero non deserunt veniam dolores quae cupiditate tenetur?",
-        },
-      ],
-      image: [
-        "https://picsum.photos/200/300",
-        "https://picsum.photos/id/237/200/300",
-        "https://picsum.photos/seed/picsum/200/300",
-      ],
-    },
-  ];
+const cards = [
+  {
+    id: 1,
+    img: "https://i.pinimg.com/736x/cc/9e/c9/cc9ec905bff2dcd351159320def91125.jpg",
+    title: "Super Car",
+    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, esse?",
+  },
+  {
+    id: 2,
+    img: "https://i.pinimg.com/564x/2c/82/c0/2c82c091134a6718a6d370e7e334807a.jpg",
+    title: "Super Car",
+    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, esse?",
+  },
+  {
+    id: 3,
+    img: "https://i.pinimg.com/564x/e7/8b/66/e78b666e0a9121d434078df993f96720.jpg",
+    title: "Super Car",
+    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, esse?",
+  },
+  {
+    id: 4,
+    img: "https://i.pinimg.com/564x/b4/08/56/b408565aa7e1ea29f8fa5c7b13aa3655.jpg",
+    title: "Super Car",
+    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, esse?",
+  },
+  {
+    id: 5,
+    img: "https://i.pinimg.com/564x/69/6b/2e/696b2eff1747e6776e7b6976a3182029.jpg",
+    title: "Super Car",
+    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, esse?",
+  },
+];
 
-  const infoArray = array[0].info;
-  const infoImage = array[0].image;
-  const imageRefs = useRef([]);
+const Card = ({ card }) => {
+  const cardRef = useRef(null);
 
-  useGSAP(() => {
-    gsap.set(imageRefs.current, { opacity: 0, scale: 0.8 });
-
-    ScrollTrigger.create({
-      trigger: ".text_image",
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 2, // Makes the transition slower and smoother
-      pin: ".right",
-      markers: true,
-      onUpdate: (self) => {
-        let index = Math.round(self.progress * (infoImage.length - 1));
-
-        gsap.to(imageRefs.current, {
-          opacity: (i) => (i === index ? 1 : 0),
-          scale: (i) => (i === index ? 1 : 0.8),
-          duration: 1, // Increased duration for smoother effect
-          ease: "power2.out", // Softer transition
-        });
+  useEffect(() => {
+    gsap.to(cardRef.current, {
+      scale: 0.8,
+      opacity: 0,
+      duration: 5,
+      scrollTrigger: {
+        trigger: cardRef.current,
+        start: "top 20%",
+        end: "bottom 20%",
+        scrub: true,
+        // markers: true
       },
     });
-  });
+  }, []);
 
   return (
+    <div
+      ref={cardRef}
+      className="sticky top-[20vh] lg:min-w-[85%] min-w-[80%] min-h-[200px] p-20 bg-[#2e251e] flex flex-col items-center text-center gap-6 rounded-3xl shadow-lg transition-transform duration-300 hover:scale-105"
+    >
+      <img src={card.img} alt={card.title} className="w-56 h-40 object-cover rounded-lg shadow-md" />
+      <h1 className="text-2xl font-bold text-white">{card.title}</h1>
+      <p className="text-white px-6 leading-relaxed">{card.description}</p>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
+
     <>
-      <div className="container">
-        <h1 className="text-2xl font-bold text-center my-4">{headLine}</h1>
-        <div className="text_image flex justify-evenly gap-2.5">
-          <div className="left w-[40%]">
-            {infoArray.map((item, id) => (
-              <div key={id} className=" border border-amber-200 h-screen flex flex-col justify-center">
-                <h3 className="font-bold text-center">{item.title}</h3>
-                <p>{item.description}</p>
-              </div>
-            ))}
-          </div>
-          <div className="right w-[400px] h-screen flex border border-amber-200 justify-center items-center relative overflow-hidden">
-            {infoImage.map((item, id) => (
-              <img
-                key={id}
-                ref={(el) => (imageRefs.current[id] = el)}
-                className="absolute w-full h-auto object-cover transition-opacity duration-1000 ease-in-out"
-                src={item}
-                alt=""
-              />
-            ))}
-          </div>
-        </div>
-      </div>
+        <div className="w-full min-h-screen bg-black flex flex-col items-center gap-8 py-40">
+      {cards.map((card) => (
+        <Card key={card.id} card={card} />
+      ))}
+    </div>
+      <div className=" h-screen">
+        <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellendus quos maiores soluta maxime nam commodi quod eligendi esse pariatur dolor nihil, corporis voluptas laboriosam asperiores sunt, consequuntur dolorem nobis modi.</h1>
+    </div>
     </>
   );
-}
+};
 
 export default App;
