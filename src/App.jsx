@@ -63,16 +63,16 @@ const Card = ({ card }) => {
   return (
     <div
       ref={cardRef}
-      className="lg:w-[95%] w-[90%] lg:h-[60vh] h-screen bg-[#2e251e] flex flex-col md:flex-row rounded-3xl shadow-lg transition-transform duration-300 hover:scale-105 pb-1"
+      className="lg:w-[95%] w-[90%] lg:h-[60vh] h-screen bg-[#2e251e] flex flex-col md:flex-row rounded-3xl shadow-lg transition-transform duration-300 hover:scale-105 lg:pb-0 pb-1"
     >
       <img
         src={card.img}
         alt={card.title}
-        className="lg:w-[60%] w-full object-cover rounded-l-lg border border-t-amber-300"
+        className="lg:w-[60%] w-full object-cover rounded-l-lg"
       />
-      <div className="flex flex-col justify-center items-center pt-15 overflow-y-auto">
+      <div className="flex flex-col justify-center gap-3 items-center overflow-y-auto pt-2">
         <h1 className="text-2xl font-bold text-white">{card.title}</h1>
-        <p className="text-white px-6 leading-relaxed">{card.description}</p>
+        <p className="text-white px-2 leading-relaxed">{card.description}</p>
       </div>
     </div>
   );
